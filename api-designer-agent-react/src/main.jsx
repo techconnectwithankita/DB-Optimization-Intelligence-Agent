@@ -20,27 +20,41 @@ const initialRequirements = [];
 
 const artifacts = [
   ['OpenAPI Specification (YAML/JSON)', 'Complete OpenAPI 3.0 specification', 'doc', '#ccfbf1', 'openapi', 'openapi.yaml'],
+  ['Swagger / API Documentation', 'Interactive API documentation notes', 'globe', '#e0f2fe', 'swagger', 'swagger-documentation.md'],
   ['API Endpoints Summary (Markdown)', 'Human-readable API summary', 'file', '#dbeafe', 'summary', 'endpoint-summary.md'],
   ['Data Models / Schemas (JSON)', 'Request & response schemas', 'cube', '#ede9fe', 'schemas', 'schemas.json'],
   ['Postman Collection', 'Ready-to-use collection for testing', 'rocket', '#ffedd5', 'postman', 'postman-collection.json'],
   ['Sequence Diagrams (Mermaid)', 'API flow and interactions', 'flow', '#e0e7ff', 'sequence', 'sequence-diagram.mmd'],
-  ['API Design Review (PDF)', 'Review checklist and guidelines', 'checkfile', '#ccfbf1', 'review', 'design-review.md']
+  ['API Design Review', 'Review checklist and guidelines', 'checkfile', '#ccfbf1', 'review', 'design-review.md'],
+  ['API Development Kit', 'Server stubs, DTOs, validators, README', 'cloud', '#dcfce7', 'devkit', 'api-development-kit.json'],
+  ['Testing Package', 'Unit, API, schema and performance tests', 'shield', '#fef3c7', 'tests', 'testing-package.json'],
+  ['Deployment Package', 'Docker, CI/CD, config and startup assets', 'sync', '#fee2e2', 'deployment', 'deployment-package.json'],
+  ['Gateway / Hosting Setup', 'Routing, auth, rate limits, versioning', 'plug', '#ede9fe', 'gateway', 'gateway-setup.json'],
+  ['Deploy & Monitor', 'Health, logs, metrics, alerts readiness', 'history', '#dbeafe', 'monitoring', 'monitoring-readiness.json']
 ];
 
 const actions = [
   ['Generate / Regenerate', 'Generate API design from requirement', 'spark'],
   ['Validate OpenAPI Spec', 'Validate spec for errors, standards & best practices', 'shield'],
-  ['Export to API Gateway', 'Export spec to gateway', 'cloud'],
-  ['Compare Changes', 'Compare with previous versions', 'sync'],
-  ['Version History', 'View all generated versions', 'history']
+  ['Generate Dev Kit', 'Create server stubs, DTOs and validators', 'cloud'],
+  ['Generate Tests', 'Create unit, API and schema validation tests', 'checkfile'],
+  ['Prepare Deployment', 'Create Docker, CI/CD and environment config', 'sync'],
+  ['Prepare Gateway', 'Create APIM, Kong and NGINX setup assets', 'plug'],
+  ['Monitoring Readiness', 'Create health, logging, metrics and alert plan', 'history']
 ];
 
 const features = [
-  ['Requirement Intake', ['Connects to multiple sources', 'Extracts functional requirements', 'Identifies entities, actions, rules'], 'file'],
-  ['API Design & Modeling', ['Identifies resources & operations', 'Defines request/response models', 'Applies REST best practices'], 'flow'],
-  ['OpenAPI Generation', ['Generates OpenAPI 3.0 spec', 'Validates and ensures consistency', 'Versioning and tagging support'], 'spark'],
-  ['Documentation & Artifacts', ['Generates docs, schemas, examples', 'Creates Postman collection', 'Generates sequence diagrams'], 'doc'],
-  ['Governance & Quality', ['Follows API design standards', 'Security, error handling, pagination', 'Reusable and maintainable design'], 'shield']
+  ['1. Sources', ['Excel/CSV upload', 'Jira, ADO, Confluence ready', 'Local docs and PDFs'], 'file'],
+  ['2. Extraction', ['Requirements and user stories', 'Rules, entities, validations', 'Priorities and dependencies'], 'flow'],
+  ['3. Selection', ['Review extracted items', 'Select requirement for generation', 'Trace to original source'], 'check'],
+  ['4. OpenAPI YAML', ['Endpoints and schemas', 'Errors and validations', 'Design notes'], 'spark'],
+  ['5. Swagger Docs', ['Interactive contract review', 'Request/response inspection', 'Try-it-ready documentation'], 'globe'],
+  ['6. Artifacts', ['Schemas and Postman', 'Sequence diagrams', 'Review checklist'], 'doc'],
+  ['7. Dev Kit', ['Server stubs', 'DTOs and validators', 'README and env config'], 'cloud'],
+  ['8. Testing', ['Unit test templates', 'API and schema tests', 'Performance setup'], 'shield'],
+  ['9. Deployment', ['Dockerfile', 'CI/CD pipeline', 'Cloud config scripts'], 'sync'],
+  ['10. Gateway', ['Routing and auth hooks', 'Rate limits', 'Versioning options'], 'plug'],
+  ['11. Monitor', ['Health checks', 'Logs and metrics', 'Alerts readiness'], 'history']
 ];
 
 function Icon({ name, size = 18 }) {
@@ -380,9 +394,11 @@ function App() {
     }
 
     const messages = {
-      'Export to API Gateway': 'Export package queued for Kong, Apigee, and Azure APIM',
-      'Compare Changes': 'Compared against v1.3: 2 endpoints changed',
-      'Version History': 'Loaded 6 generated versions'
+      'Generate Dev Kit': 'Development kit is ready in Output Artifacts',
+      'Generate Tests': 'Testing package is ready in Output Artifacts',
+      'Prepare Deployment': 'Deployment package is ready in Output Artifacts',
+      'Prepare Gateway': 'Gateway setup is ready in Output Artifacts',
+      'Monitoring Readiness': 'Monitoring readiness package is ready in Output Artifacts'
     };
     setToast(messages[name]);
     setActivity((current) => [{ label: 'Action', value: name }, ...current.slice(0, 2)]);
@@ -528,6 +544,9 @@ function App() {
                   <ul>
                     {structuredPreview.notes.map((note) => <li key={note}>{note}</li>)}
                   </ul>
+                  <div className="lifecycle-strip">
+                    {['Swagger Docs', 'Artifacts', 'Dev Kit', 'Tests', 'Deployment', 'Gateway', 'Monitor'].map((item) => <span key={item}>{item}</span>)}
+                  </div>
                 </div>
                 <div className="file-toolbar">
                   <button className="active">openapi.yaml</button>

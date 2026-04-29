@@ -32,6 +32,17 @@ You can also choose another port:
 python run_agent.py 8030
 ```
 
+## Deploy On Render
+
+Create a Render Web Service with these settings:
+
+- Root Directory: `sql-optimization-db-intelligence-agent` if deploying from the parent repo
+- Runtime: Python
+- Build Command: `echo "No build required"`
+- Start Command: `python -B run_agent.py`
+
+The included `render.yaml` contains the same settings for Render Blueprints. The server uses Render's `PORT` environment variable and binds to `0.0.0.0` when running on Render.
+
 ## Stored Procedure Dependency Workflow
 
 1. Paste or load `sample-data/usp_ProcessCustomerOrders.sql`.

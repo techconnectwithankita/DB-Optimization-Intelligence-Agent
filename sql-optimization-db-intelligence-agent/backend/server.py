@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import mimetypes
+import os
 import sys
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -123,8 +124,9 @@ class AgentHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8020
-    server = ThreadingHTTPServer(("127.0.0.1", port), AgentHandler)
+    port = int(os.getenv("PORT", sys.argv[1] if len(sys.argv) > 1 else "8020"))
+    host = "0.0.0.0" if os.getenv("RENDER") else "127.0.0.1"
+    server = ThreadingHTTPServer((host, port), AgentHandler)
     print(f"DB Optimization & Intelligence Agent running at http://127.0.0.1:{port}")
     server.serve_forever()
 

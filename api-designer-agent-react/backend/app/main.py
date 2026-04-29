@@ -286,6 +286,24 @@ def artifact(payload: ArtifactRequest) -> PlainTextResponse:
     elif artifact_type == "review":
         text = design.get("design_review_markdown", "")
         media_type = "text/markdown"
+    elif artifact_type == "swagger":
+        text = design.get("swagger_documentation_markdown", "")
+        media_type = "text/markdown"
+    elif artifact_type == "devkit":
+        text = json.dumps(design.get("development_kit", {}), indent=2)
+        media_type = "application/json"
+    elif artifact_type == "tests":
+        text = json.dumps(design.get("testing_package", {}), indent=2)
+        media_type = "application/json"
+    elif artifact_type == "deployment":
+        text = json.dumps(design.get("deployment_package", {}), indent=2)
+        media_type = "application/json"
+    elif artifact_type == "gateway":
+        text = json.dumps(design.get("gateway_setup", {}), indent=2)
+        media_type = "application/json"
+    elif artifact_type == "monitoring":
+        text = json.dumps(design.get("monitoring_readiness", {}), indent=2)
+        media_type = "application/json"
     else:
         raise HTTPException(status_code=400, detail=f"Unknown artifact type: {payload.artifact_type}")
 
